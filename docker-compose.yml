@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: moneyflow-postgres
+    environment:
+      POSTGRES_DB: moneyflow
+      POSTGRES_USER: moneyflow
+      POSTGRES_PASSWORD: moneyflow
+    ports:
+      - "5432:5432"
+    volumes:
+      - moneyflow_pg:/var/lib/postgresql/data
+
+volumes:
+  moneyflow_pg:

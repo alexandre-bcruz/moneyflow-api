@@ -1,4 +1,4 @@
-package com.alexandre_bcruz.moneyflow_api;
+package com.alexandrebcruz.moneyflow;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,5 +1,6 @@
-package com.alexandre_bcruz.moneyflow_api.controller;
+package com.alexandrebcruz.moneyflow.adapters.in.web;
 
+import com.alexandrebcruz.moneyflow.adapters.in.web.controller.HealthController;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
