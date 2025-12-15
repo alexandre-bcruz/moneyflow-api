@@ -46,7 +46,8 @@ public class CategoryRepositoryAdapter implements CategoryRepository {
 
     @Override
     public Category findById(UUID id) {
-       return jpa.findById(id).map(this::toDomain).orElseThrow(CategoryNotFoundException::new);
+       return jpa.findById(id)
+               .map(this::toDomain).orElseThrow(CategoryNotFoundException::new);
     }
 
     @Override
