@@ -3,7 +3,7 @@
 MoneyFlow is a personal finance MVP focused on weekly cash flow tracking, designed to demonstrate clean backend architecture and real-world trade-offs.
 
 ## Tech Stack
-- Java 25
+- Java 21
 - Spring Boot 4
 - Maven
 

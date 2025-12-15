@@ -12,5 +12,5 @@ public interface CategoryRepository {
     Optional<Category> findByIdAndUserId(UUID id, UUID userId);
     boolean existsByUserIdAndNameIgnoreCase(UUID userId, String name);
     void deleteById(UUID id);
-
+    Category findById(UUID id);
 }

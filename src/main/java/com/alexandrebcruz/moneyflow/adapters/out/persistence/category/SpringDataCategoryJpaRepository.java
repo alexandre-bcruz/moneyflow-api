@@ -1,4 +1,4 @@
-package com.alexandrebcruz.moneyflow.adapters.out.persistence;
+package com.alexandrebcruz.moneyflow.adapters.out.persistence.category;
 
 import com.alexandrebcruz.moneyflow.domain.model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,4 +11,5 @@ public interface SpringDataCategoryJpaRepository extends JpaRepository<CategoryE
     List<Category> findAllByUserId(UUID userId);
     Optional<Category> findByIdAndUserId(UUID id, UUID userId);
     boolean existsByUserIdAndNameIgnoreCase(UUID userId, String name);
+    Optional<CategoryEntity> findById(UUID id);
 }

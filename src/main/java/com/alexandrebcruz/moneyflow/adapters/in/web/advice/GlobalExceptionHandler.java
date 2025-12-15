@@ -1,5 +1,7 @@
 package com.alexandrebcruz.moneyflow.adapters.in.web.advice;
 
+import com.alexandrebcruz.moneyflow.domain.exception.CategoryNotFoundException;
+import com.alexandrebcruz.moneyflow.domain.exception.TransactionNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -10,7 +12,7 @@ import java.time.Instant;
 import java.util.Map;
 
 @ControllerAdvice
-public class GlobalEcptionHandler {
+public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> handleValidation(MethodArgumentNotValidException ex){
@@ -23,6 +25,13 @@ public class GlobalEcptionHandler {
     ResponseEntity<?> handleConflict(IllegalStateException ex){
         return ResponseEntity.status(HttpStatus.CONFLICT).body(
                 Map.of("error", ex.getMessage(),
+                        "timestamp", Instant.now())
+        );
+    }
+    @ExceptionHandler({CategoryNotFoundException.class, TransactionNotFoundException.class})
+    ResponseEntity<?> handleConflict(RuntimeException ex){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                Map.of("not_found", ex.getMessage(),
                         "timestamp", Instant.now())
         );
     }

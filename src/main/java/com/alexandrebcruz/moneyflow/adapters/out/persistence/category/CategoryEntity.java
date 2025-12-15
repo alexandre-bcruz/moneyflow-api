@@ -1,4 +1,4 @@
-package com.alexandrebcruz.moneyflow.adapters.out.persistence;
+package com.alexandrebcruz.moneyflow.adapters.out.persistence.category;
 
 import jakarta.persistence.*;
 
@@ -22,7 +22,8 @@ public class CategoryEntity {
 
     protected  CategoryEntity() {}
 
-    CategoryEntity(UUID userId, String name){
+    CategoryEntity(UUID id, UUID userId, String name){
+        this.id = id;
         this.userId = userId;
         this.name = name;
     }

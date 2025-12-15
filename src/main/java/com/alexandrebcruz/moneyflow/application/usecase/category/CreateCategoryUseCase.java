@@ -1,4 +1,4 @@
-package com.alexandrebcruz.moneyflow.application.usecase;
+package com.alexandrebcruz.moneyflow.application.usecase.category;
 
 import com.alexandrebcruz.moneyflow.domain.CategoryRepository;
 import com.alexandrebcruz.moneyflow.domain.model.Category;

@@ -13,13 +13,13 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(AbstractHttpConfigurer::disable)
+        http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/healthz",
                                 "/actuator/health",
-                                "/categories/**"
+                                "/categories/**",
+                                "/transactions/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
