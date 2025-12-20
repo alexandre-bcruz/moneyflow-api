@@ -17,8 +17,8 @@ public final class MoneyUtils {
                 .doubleValue();
     }
 
-    public static long toMinorUnit(double value, int fractionDigits) {
-        return BigDecimal.valueOf(value)
+    public static long toMinorUnit(BigDecimal value, int fractionDigits) {
+        return value
                 .movePointRight(fractionDigits)
                 .setScale(0, RoundingMode.HALF_UP)
                 .intValue();

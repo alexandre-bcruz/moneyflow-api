@@ -43,7 +43,7 @@ public class TransactionController {
     @PostMapping
     public ResponseEntity<TransactionResponse> create(@Valid @RequestBody CreateTransactionRequest req){
         requireNonNull(req.amountCurrency(), "valor da transacao deve ser informado.");
-        var amountCents = toMinorUnit(req.amountCurrency().doubleValue(), 2);
+        var amountCents = toMinorUnit(req.amountCurrency(), 2);
         var created = createTransactionUseCase.execute(USER_ID, req.categoryId(), amountCents, req.type(), req.description(), req.occurredAt());
         var body = new TransactionResponse(created.id(), created.categoryId(), created.amountCurrency(), created.type(), created.description(), created.occurredAt());
         return ResponseEntity.created(URI.create("/transactions/" + created.id())).body(body);

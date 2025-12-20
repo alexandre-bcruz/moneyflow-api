@@ -30,7 +30,7 @@ public class UpdateTransactionUseCase {
         Objects.requireNonNull(txId, "txId is required");
 
         var categoryId = transaction.categoryId();
-        var amountCents = toMinorUnit(transaction.amountCurrency().doubleValue(), 2);
+        var amountCents = toMinorUnit(transaction.amountCurrency(), 2);
         var type = transaction.type();
         var description = transaction.description();
         var occurredAt = transaction.occurredAt();
@@ -48,7 +48,7 @@ public class UpdateTransactionUseCase {
             changed = true;
         }
 
-        long newAmount = toMinorUnit(existing.amountCurrency().doubleValue(), 2);
+        long newAmount = toMinorUnit(existing.amountCurrency(), 2);
         if (amountCents != newAmount) {
             if (amountCents <= 0) throw new IllegalArgumentException("amountCents must be positive");
             newAmount = amountCents;

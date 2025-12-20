@@ -20,8 +20,8 @@ import static com.alexandrebcruz.moneyflow.domain.model.Transaction.TransactionT
 @Service
 public class GetWeeklySummaryUseCase {
 
-    ListTransactionUseCase listTransactionUseCase;
-    GetCategoryUseCase getCategoryUseCase;
+    private final ListTransactionUseCase listTransactionUseCase;
+    private final GetCategoryUseCase getCategoryUseCase;
 
     public GetWeeklySummaryUseCase(ListTransactionUseCase listTransactionUseCase, GetCategoryUseCase getCategoryUseCase) {
         this.listTransactionUseCase = listTransactionUseCase;
@@ -39,7 +39,7 @@ public class GetWeeklySummaryUseCase {
         var expenseByCategory= new HashMap<UUID, Long>();
 
         for ( var tx : transactions ) {
-            var amountCents = toMinorUnit(tx.amountCurrency().doubleValue(), 2);
+            var amountCents = toMinorUnit(tx.amountCurrency(), 2);
 
             if(tx.type() == INCOME) {
                 totalIncome += amountCents;
