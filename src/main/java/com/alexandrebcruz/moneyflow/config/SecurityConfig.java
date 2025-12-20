@@ -19,6 +19,7 @@ public class SecurityConfig {
                                 "/healthz",
                                 "/actuator/health",
                                 "/categories/**",
+                                "/weeks/**",
                                 "/transactions/**"
                         ).permitAll()
                         .anyRequest().authenticated()

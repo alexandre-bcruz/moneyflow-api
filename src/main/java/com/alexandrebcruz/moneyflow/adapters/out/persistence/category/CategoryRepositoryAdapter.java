@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 @Repository
@@ -38,6 +39,10 @@ public class CategoryRepositoryAdapter implements CategoryRepository {
                 .map(e -> new Category(e.id(), e.userId(), e.name()))
                 .toList();
     }
+    @Override
+    public List<Category> findAllById(Set<UUID> ids) {
+        return jpa.findAllById(ids);
+    }
 
     @Override
     public Optional<Category> findByIdAndUserId(UUID id, UUID userId) {
@@ -54,6 +59,7 @@ public class CategoryRepositoryAdapter implements CategoryRepository {
     public boolean existsByUserIdAndNameIgnoreCase(UUID userId, String name) {
         return jpa.existsByUserIdAndNameIgnoreCase(userId, name);
     }
+
 
     private Category toDomain(CategoryEntity entity){
         return new Category(entity.getId(), entity.getUserId(), entity.getName());

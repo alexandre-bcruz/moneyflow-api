@@ -9,6 +9,9 @@ import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
+import static com.alexandrebcruz.moneyflow.adapters.in.web.util.MoneyUtils.fromMinorUnit;
+import static com.alexandrebcruz.moneyflow.adapters.in.web.util.MoneyUtils.toMinorUnit;
+
 @Service
 public class UpdateTransactionUseCase {
 
@@ -27,7 +30,7 @@ public class UpdateTransactionUseCase {
         Objects.requireNonNull(txId, "txId is required");
 
         var categoryId = transaction.categoryId();
-        var amountCents = transaction.amountCents();
+        var amountCents = toMinorUnit(transaction.amountCurrency().doubleValue(), 2);
         var type = transaction.type();
         var description = transaction.description();
         var occurredAt = transaction.occurredAt();
@@ -39,15 +42,14 @@ public class UpdateTransactionUseCase {
 
         UUID newCategoryId = existing.categoryId();
         if (categoryId != null && !categoryId.equals(existing.categoryId())) {
-            // valida category ownership
             categoryRepo.findByIdAndUserId(categoryId, userId)
                     .orElseThrow(() -> new IllegalArgumentException("Category not found"));
             newCategoryId = categoryId;
             changed = true;
         }
 
-        int newAmount = existing.amountCents();
-        if (amountCents != existing.amountCents()) {
+        long newAmount = toMinorUnit(existing.amountCurrency().doubleValue(), 2);
+        if (amountCents != newAmount) {
             if (amountCents <= 0) throw new IllegalArgumentException("amountCents must be positive");
             newAmount = amountCents;
             changed = true;
@@ -81,7 +83,7 @@ public class UpdateTransactionUseCase {
                 existing.id(),
                 existing.userId(),
                 newCategoryId,
-                newAmount,
+                fromMinorUnit(newAmount,2),
                 newType,
                 newDesc,
                 newOccurredAt

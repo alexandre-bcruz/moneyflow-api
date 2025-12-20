@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.UUID;
 
+import static com.alexandrebcruz.moneyflow.adapters.in.web.util.MoneyUtils.fromMinorUnit;
+
 @Service
 public class CreateTransactionUseCase {
 
@@ -17,10 +19,10 @@ public class CreateTransactionUseCase {
         this.txRepo = txRepo;
     }
 
-    public Transaction execute(UUID userId, UUID categoryId, int amountCents, Transaction.TransactionType type, String description, Instant occurredAt) {
+    public Transaction execute(UUID userId, UUID categoryId, long amountCents, Transaction.TransactionType type, String description, Instant occurredAt) {
         if (amountCents <= 0) throw new IllegalArgumentException("amountCents must be positive");
 
-        var tx = new Transaction(null, userId, categoryId, amountCents, type, description, occurredAt);
+        var tx = new Transaction(null, userId, categoryId, fromMinorUnit(amountCents, 2), type, description, occurredAt);
         return txRepo.save(tx);
     }
 }

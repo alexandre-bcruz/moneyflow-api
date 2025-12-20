@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.alexandrebcruz.moneyflow.adapters.in.web.util.MoneyUtils.fromMinorUnit;
+import static com.alexandrebcruz.moneyflow.adapters.in.web.util.MoneyUtils.toMinorUnit;
 import static java.util.Optional.ofNullable;
 
 @Repository
@@ -30,7 +32,7 @@ public class TransactionRepositoryAdapter implements TransactionRepository {
         var entity = new TransactionEntity(
                 tx.userId(),
                 tx.categoryId(),
-                tx.amountCents(),
+                (int) toMinorUnit(tx.amountCurrency().doubleValue(),2),
                 tx.type(),
                 tx.description(),
                 occuredAt
@@ -71,7 +73,7 @@ public class TransactionRepositoryAdapter implements TransactionRepository {
                 e.getId(),
                 e.getUserId(),
                 e.getCategoryId(),
-                e.getAmountCents(),
+                fromMinorUnit(e.getAmountCents(), 2),
                 e.getType(),
                 e.getDescription(),
                 e.getOccurredAt()

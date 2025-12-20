@@ -12,6 +12,9 @@ import java.net.URI;
 import java.time.Instant;
 import java.util.UUID;
 
+import static com.alexandrebcruz.moneyflow.adapters.in.web.util.MoneyUtils.toMinorUnit;
+import static java.util.Objects.requireNonNull;
+
 @RestController
 @RequestMapping("/transactions")
 public class TransactionController {
@@ -39,8 +42,10 @@ public class TransactionController {
 
     @PostMapping
     public ResponseEntity<TransactionResponse> create(@Valid @RequestBody CreateTransactionRequest req){
-        var created = createTransactionUseCase.execute(USER_ID, req.categoryId(), req.amountCents(), req.type(), req.description(), req.occurredAt());
-        var body = new TransactionResponse(created.id(), created.categoryId(), created.amountCents(), created.type(), created.description(), created.occurredAt());
+        requireNonNull(req.amountCurrency(), "valor da transacao deve ser informado.");
+        var amountCents = toMinorUnit(req.amountCurrency().doubleValue(), 2);
+        var created = createTransactionUseCase.execute(USER_ID, req.categoryId(), amountCents, req.type(), req.description(), req.occurredAt());
+        var body = new TransactionResponse(created.id(), created.categoryId(), created.amountCurrency(), created.type(), created.description(), created.occurredAt());
         return ResponseEntity.created(URI.create("/transactions/" + created.id())).body(body);
     }
 
@@ -48,7 +53,7 @@ public class TransactionController {
     public ResponseEntity<?> list(@RequestParam Instant from, @RequestParam Instant to, @RequestParam(required = false) UUID categoryId){
         var list = listTransactionUseCase.execute(USER_ID, from, to, categoryId)
                 .stream()
-                .map(c -> new TransactionResponse(c.id(), c.categoryId(), c.amountCents(), c.type(), c.description(), c.occurredAt()))
+                .map(c -> new TransactionResponse(c.id(), c.categoryId(), c.amountCurrency(), c.type(), c.description(), c.occurredAt()))
                 .toList();
         return ResponseEntity.ok(list);
     }

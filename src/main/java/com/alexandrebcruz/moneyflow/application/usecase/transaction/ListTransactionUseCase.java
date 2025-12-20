@@ -19,9 +19,13 @@ public class ListTransactionUseCase {
     }
 
     public List<Transaction> execute(UUID userId, Instant from, Instant to, UUID categoryId) {
-        if (categoryId != null) {
-            return txRepository.findByUserIdAndRangeAndCategory(userId, from, to, categoryId);
-        }
+        return (categoryId != null )
+                ? txRepository.findByUserIdAndRangeAndCategory(userId, from, to, categoryId)
+                : txRepository.findByUserIdAndRange(userId, from, to);
+    }
+
+    public List<Transaction> execute(UUID userId, Instant from, Instant to) {
         return txRepository.findByUserIdAndRange(userId, from, to);
     }
+
 }
