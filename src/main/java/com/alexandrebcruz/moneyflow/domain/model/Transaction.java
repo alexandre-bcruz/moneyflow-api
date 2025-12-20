@@ -1,5 +1,6 @@
 package com.alexandrebcruz.moneyflow.domain.model;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -7,7 +8,7 @@ public record Transaction(
         UUID id,
         UUID userId,
         UUID categoryId,
-        int amountCents,
+        BigDecimal amountCurrency,
         TransactionType type,
         String description,
         Instant occurredAt

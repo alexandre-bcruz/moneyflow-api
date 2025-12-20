@@ -2,15 +2,15 @@ package com.alexandrebcruz.moneyflow.domain;
 
 import com.alexandrebcruz.moneyflow.domain.model.Category;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public interface CategoryRepository {
     Category save(Category category);
+    void deleteById(UUID id);
+
+    boolean existsByUserIdAndNameIgnoreCase(UUID userId, String name);
     List<Category> findAllByUserId(UUID userId);
     Optional<Category> findByIdAndUserId(UUID id, UUID userId);
-    boolean existsByUserIdAndNameIgnoreCase(UUID userId, String name);
-    void deleteById(UUID id);
     Category findById(UUID id);
+    List<Category> findAllById(Set<UUID> ids);
 }
