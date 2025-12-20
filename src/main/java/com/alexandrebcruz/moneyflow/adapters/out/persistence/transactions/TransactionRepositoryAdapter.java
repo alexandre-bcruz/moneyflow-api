@@ -32,7 +32,7 @@ public class TransactionRepositoryAdapter implements TransactionRepository {
         var entity = new TransactionEntity(
                 tx.userId(),
                 tx.categoryId(),
-                (int) toMinorUnit(tx.amountCurrency().doubleValue(),2),
+                (int) toMinorUnit(tx.amountCurrency(),2),
                 tx.type(),
                 tx.description(),
                 occuredAt
